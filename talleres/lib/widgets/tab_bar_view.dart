@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:talleres/views/timer/timer_view.dart';
 import 'grid_view.dart'; // Ajusta la ruta si es necesario
 
 class TabBarScreen extends StatelessWidget {
@@ -13,7 +14,7 @@ class TabBarScreen extends StatelessWidget {
           const TabBar(
             tabs: [
               Tab(icon: Icon(Icons.grid_view), text: 'Grid'),
-              Tab(icon: Icon(Icons.info), text: 'Info'),
+              Tab(icon: Icon(Icons.timer), text: 'Timer'),
               Tab(icon: Icon(Icons.settings), text: 'Ajustes'),
             ],
           ),
@@ -22,10 +23,15 @@ class TabBarScreen extends StatelessWidget {
               children: [
                 // Primera pestaña: tu GridViewWidget con 3 elementos
                 GridViewWidget(
-                  items: const ['Registrarse', 'Ciclo de vida', 'Opción 3'],
+                  items: const [
+                    'Registrarse',
+                    'Ciclo de vida',
+                    'Future',
+                    'Isolate',
+                  ],
                 ),
-                // Segunda pestaña: Info
-                const Center(child: Text('Contenido de Info')),
+                // Segunda pestaña: Timer
+                const TimerView(),
                 // Tercera pestaña: Ajustes
                 const Center(child: Text('Contenido de Ajustes')),
               ],
