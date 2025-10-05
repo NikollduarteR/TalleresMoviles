@@ -17,19 +17,33 @@ class GridViewWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
-            if (items[index] == 'Registrarse') {
-              // Navega a la ruta de registrarse
-              context.push('/registrar');
-            }
-            if (items[index] == 'Ciclo de vida') {
-              // Navega a la pantalla de ciclo de vida
-              context.push('/ciclo_vida_demo');
+            final selected = items[index];
+            switch (selected) {
+              case 'Registrarse':
+                context.push('/registrar');
+                break;
+              case 'Ciclo de vida':
+                context.push('/ciclo_vida_demo');
+                break;
+              case 'Future':
+                context.push('/future');
+                break;
+              case 'Isolate':
+                context.push('/isolate');
+                break;
             }
           },
           child: Card(
-            color: Colors.blue[100],
+            color: Color.fromARGB(255, 248, 222, 250),
             child: Center(
-              child: Text(items[index], style: const TextStyle(fontSize: 18)),
+              child: Text(
+                items[index],
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
             ),
           ),
         );

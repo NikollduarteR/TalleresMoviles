@@ -12,9 +12,9 @@ class AppTheme {
       appBarTheme: const AppBarTheme(
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Color.fromARGB(255, 29, 41, 214), // Color del AppBar
+        backgroundColor: Color.fromARGB(255, 239, 152, 247), // Color del AppBar
         titleTextStyle: TextStyle(
-          color: Colors.white, // Texto blanco para el AppBar
+          color: Colors.black87, // Texto blanco para el AppBar
           fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
