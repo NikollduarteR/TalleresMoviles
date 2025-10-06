@@ -1,57 +1,94 @@
-# taller 2 - 
+# taller 3 - Segundo plano, asincronía y servicios en Flutter
 
-## Arquitectura y Navegación
-La aplicación utiliza go_router para la navegación entre pantallas y el paso de parámetros.
-La estructura principal de navegación es la siguiente:
 
-**Rutas existentes**
-- /
+##  Descripción general
+Este proyecto demuestra el uso de **asincronía en Flutter** mediante tres ejemplos prácticos:
 
-Pantalla principal (HomeScreen):
-Contiene un TabBar con varias pestañas. En la primera pestaña se muestra un GridView con varias opciones.
+- **Future / async / await:** Simulación de carga de datos con espera asíncrona.
+- **Isolate:** Ejecución de tareas pesadas en segundo plano sin bloquear la interfaz.
+- **Timer:** Cronómetro funcional con control total (iniciar, pausar, reanudar, reiniciar).
 
-- /registrar
-Pantalla de registro (RegistrarScreen):
-Se accede al seleccionar **"Opción 1"** en el grid. Aquí se muestra un TextField para ingresar un dato y botones para navegar a la pantalla de detalle usando los métodos go, push o replace.
+Cada vista se integra en una interfaz con pestañas (`TabBarScreen`) o mediante un menú tipo `GridView`, mostrando cómo Flutter gestiona procesos en segundo plano de forma eficiente.
 
-- /detalle/:metodo/:valor
-Pantalla de detalle (RegistrarDetalleScreen):
-Muestra el valor ingresado en el TextField y el método de navegación utilizado.
+---
 
-**¿Cómo se envían los parámetros?**
-- Al escribir un valor en el TextField de la pantalla de registro y presionar uno de los botones (go, push, replace), se navega a la ruta /detalle/:metodo/:valor, donde:
+## Flujo general del proyecto
 
-  - :metodo es el método de navegación utilizado.
-  - :valor es el texto ingresado por el usuario.
+### Menú principal (`GridViewWidget`)
+El usuario accede al menú principal con varias opciones:
+- **Registrarse**
+- **Ciclo de vida**
+- **Future**
+- **Isolate**
+- **Timer**
 
-- En la pantalla de detalle, estos parámetros se reciben y se muestran en pantalla.
+Cada tarjeta abre su respectiva pantalla.
 
-**Ejemplo de flujo**
-El usuario abre la app y ve el TabBar.
-En la primera pestaña, el usuario selecciona Opción 1 del grid.
-Se navega a la pantalla de registro (/registrar).
-El usuario ingresa un dato en el TextField y elige cómo navegar (go, push o replace).
-Se navega a la pantalla de detalle (/detalle/:metodo/:valor), donde se muestran el método y el valor recibido.
+---
 
-## Ciclo de Vida
+## Flujos de ejecución
 
-La aplicación incluye una pantalla dedicada a demostrar el ciclo de vida de un StatefulWidget en Flutter.
-Puedes acceder a esta pantalla seleccionando **"Opción 2"** en el GridView de la pestaña principal.
+### 1. Future / async / await
+**Objetivo:** Simular una carga de datos sin bloquear la UI.
 
-En esta pantalla se muestran y registran en consola los métodos clave del ciclo de vida:
+**Flujo:**
+1. El usuario presiona **“Cargar datos simulados”**.  
+2. Se ejecuta una función `async` con `await Future.delayed(Duration(seconds: 3))`.  
+3. Durante la espera, se muestra un indicador de carga (`CircularProgressIndicator`).  
+4. Al finalizar, se actualiza la UI con los datos recibidos o un mensaje de error.
 
-- **initState:** Se ejecuta una vez al crear el widget.
-- **didChangeDependencies:** Se ejecuta después de initState y cuando cambian las dependencias.
-- **build:** Se ejecuta cada vez que el widget se reconstruye.
-- **setState:** Se llama manualmente para actualizar el estado y reconstruir el widget.
-- **dispose:** Se ejecuta justo antes de eliminar el widget del árbol.
+**Diagrama:**
+![Diagrama del Future](assets/image2.png)
+---
 
-## Widget 
-- **TabBar:** se utilizó para organizar las secciones principales de la aplicación (Grid, Info, Ajustes) dentro de una misma pantalla. Este widget facilita la navegación sin necesidad de cambiar de página completa, lo que hace que el acceso a la información sea más rápido e intuitivo.
+### 2. Isolate (tarea pesada)
+**Objetivo:** Ejecutar un cálculo intensivo sin bloquear la interfaz principal.
 
-- **GridView:** se empleó en la sección principal para mostrar diferentes opciones (ej. Registrarse, Ciclo de vida, Opción 3) de manera ordenada y visualmente atractiva. La cuadrícula permite aprovechar mejor el espacio de la pantalla y mantiene una estructura limpia.
+**Flujo:**
+1. El usuario presiona **“Ejecutar tarea larga”**.  
+2. Se crea un `ReceivePort` y se lanza un nuevo `Isolate`.  
+3. El proceso pesado (p. ej. suma de números o bucles grandes) se ejecuta en segundo plano.  
+4. Al terminar, el `Isolate` envía el resultado al hilo principal.  
+5. La UI muestra el mensaje con el resultado final.
 
-- **TextField:** se integró (en la opción de Registrarse) para permitir que el usuario ingrese información, como nombre, correo o contraseña. Este widget es fundamental en cualquier formulario y proporciona una experiencia de entrada de datos simple y personalizable.
+**Diagrama:**
+![Diagrama del Isolate](assets/image3.png)
+
+---
+
+### 3. Timer (cronómetro)
+**Objetivo:** Actualizar un contador cada segundo y controlar su estado con botones.
+
+**Flujo:**
+1. El usuario puede presionar **Iniciar**, **Pausar**, **Reanudar** o **Reiniciar**.  
+2. `Timer.periodic(Duration(seconds: 1))` actualiza el contador cada segundo.  
+3. Si el usuario pausa o sale de la vista, se cancela el `Timer` para liberar recursos.
+
+
+**Diagrama:**
+![Diagrama del Timer](assets/image.png)
+
+---
+
+## Cuándo usar cada mecanismo
+
+| Mecanismo | Cuándo usarlo | Ejemplo |
+|------------|----------------|----------|
+| **Future** | Cuando se necesita ejecutar tareas **asíncronas cortas**, como llamadas HTTP, lectura de archivos o esperas simuladas. | Cargar lista de usuarios desde una API. |
+| **async / await** | Para escribir código asincrónico más claro y legible, esperando resultados sin bloquear la UI. | Esperar respuesta de un servidor o base de datos. |
+| **Timer** | Para ejecutar acciones **periódicas o con retardo**, como cronómetros o animaciones. | Cronómetro, cuenta regresiva, refrescar datos cada X segundos. |
+| **Isolate** | Para tareas **pesadas de CPU** que bloquearían la interfaz principal si se ejecutan directamente. | Procesamiento de datos, cifrado, simulaciones, cálculos grandes. |
+
+---
+
+## Buenas prácticas
+
+- Cancelar `Timer` en `dispose()` para evitar fugas de memoria.  
+- Usar `mounted` antes de `setState()` después de operaciones asincrónicas.  
+- No usar `Isolate` para tareas simples, solo para procesos realmente pesados.  
+- Mostrar siempre los estados de la operación (loading, success, error).  
+
+---
 
 ## Datos del estudiante
 
