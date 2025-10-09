@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:talleres/views/meal/meal_list_view.dart';
 import 'package:talleres/views/timer/timer_view.dart';
 import 'grid_view.dart'; // Ajusta la ruta si es necesario
 
@@ -15,7 +16,7 @@ class TabBarScreen extends StatelessWidget {
             tabs: [
               Tab(icon: Icon(Icons.grid_view), text: 'Grid'),
               Tab(icon: Icon(Icons.timer), text: 'Timer'),
-              Tab(icon: Icon(Icons.settings), text: 'Ajustes'),
+              Tab(icon: Icon(Icons.fastfood), text: 'Meals'),
             ],
           ),
           Expanded(
@@ -32,8 +33,8 @@ class TabBarScreen extends StatelessWidget {
                 ),
                 // Segunda pestaña: Timer
                 const TimerView(),
-                // Tercera pestaña: Ajustes
-                const Center(child: Text('Contenido de Ajustes')),
+                // Tercera pestaña: Lista de comidas
+                const MealListView(),
               ],
             ),
           ),
