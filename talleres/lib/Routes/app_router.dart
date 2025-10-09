@@ -93,7 +93,7 @@ final GoRouter appRouter = GoRouter(
           const MealListView(), // Pantalla de lista de comidas
     ),
 
-    // 📋 Ruta para detalle de una comida
+    // Ruta para detalle de una comida
     GoRoute(
       path: '/meal/:id', // se envía id y nombre como parámetros
       name: 'meal_detail',

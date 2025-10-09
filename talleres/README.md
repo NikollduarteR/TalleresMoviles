@@ -1,59 +1,74 @@
-# taller 2 - 
+# Taller 4 - HTTP  
 
-## Arquitectura y Navegación
-La aplicación utiliza go_router para la navegación entre pantallas y el paso de parámetros.
-La estructura principal de navegación es la siguiente:
+Aplicación Flutter que consume la API pública **TheMealDB** para mostrar recetas de comidas, sus detalles e ingredientes.  
+El proyecto implementa **navegación con `go_router`**, manejo de **variables de entorno con `flutter_dotenv`**, y una **arquitectura modular** con carpetas bien definidas.
 
-**Rutas existentes**
-- /
+---
 
-Pantalla principal (HomeScreen):
-Contiene un TabBar con varias pestañas. En la primera pestaña se muestra un GridView con varias opciones.
+## Descripción de la API
 
-- /registrar
-Pantalla de registro (RegistrarScreen):
-Se accede al seleccionar **"Opción 1"** en el grid. Aquí se muestra un TextField para ingresar un dato y botones para navegar a la pantalla de detalle usando los métodos go, push o replace.
+**API utilizada:** [TheMealDB](https://www.themealdb.com/api.php)
 
-- /detalle/:metodo/:valor
-Pantalla de detalle (RegistrarDetalleScreen):
-Muestra el valor ingresado en el TextField y el método de navegación utilizado.
+**Endpoint principal:**
+https://www.themealdb.com/api/json/v1/1/search.php?s=
 
-**¿Cómo se envían los parámetros?**
-- Al escribir un valor en el TextField de la pantalla de registro y presionar uno de los botones (go, push, replace), se navega a la ruta /detalle/:metodo/:valor, donde:
+**Ejemplo de uso:**
+GET https://www.themealdb.com/api/json/v1/1/search.php?s=Migas
 
-  - :metodo es el método de navegación utilizado.
-  - :valor es el texto ingresado por el usuario.
+**Ejemplo de respuesta JSON:**
 
-- En la pantalla de detalle, estos parámetros se reciben y se muestran en pantalla.
+json
+{
+  "meals": [
+    {
+      "idMeal": "53086",
+      "strMeal": "Migas",
+      "strCategory": "Miscellaneous",
+      "strArea": "Spanish",
+      "strInstructions": "Crumble the bread into small pieces. Sprinkle...",
+      "strMealThumb": ""https://www.themealdb.com/images/media/meals/xd9aj21740432378.jpg"
+    }
+  ]
+}
 
-**Ejemplo de flujo**
-El usuario abre la app y ve el TabBar.
-En la primera pestaña, el usuario selecciona Opción 1 del grid.
-Se navega a la pantalla de registro (/registrar).
-El usuario ingresa un dato en el TextField y elige cómo navegar (go, push o replace).
-Se navega a la pantalla de detalle (/detalle/:metodo/:valor), donde se muestran el método y el valor recibido.
+## Arquitectura del proyecto
 
-## Ciclo de Vida
+![Estructura del proyecto](docs/image.png)
+![Estructura del proyecto](docs/image2.png)
 
-La aplicación incluye una pantalla dedicada a demostrar el ciclo de vida de un StatefulWidget en Flutter.
-Puedes acceder a esta pantalla seleccionando **"Opción 2"** en el GridView de la pestaña principal.
+## Navegación con go_router
 
-En esta pantalla se muestran y registran en consola los métodos clave del ciclo de vida:
+Las rutas se manejan desde el archivo app_router.dart
 
-- **initState:** Se ejecuta una vez al crear el widget.
-- **didChangeDependencies:** Se ejecuta después de initState y cuando cambian las dependencias.
-- **build:** Se ejecuta cada vez que el widget se reconstruye.
-- **setState:** Se llama manualmente para actualizar el estado y reconstruir el widget.
-- **dispose:** Se ejecuta justo antes de eliminar el widget del árbol.
+Ruta para listado de comidas
+    GoRoute(
+      path: '/meals',
+      name: 'meals',
+      builder: (context, state) =>
+          const MealListView(), // Pantalla de lista de comidas
+    ),
 
-## Widget 
-- **TabBar:** se utilizó para organizar las secciones principales de la aplicación (Grid, Info, Ajustes) dentro de una misma pantalla. Este widget facilita la navegación sin necesidad de cambiar de página completa, lo que hace que el acceso a la información sea más rápido e intuitivo.
+Ruta para detalle de una comida
+    GoRoute(
+      path: '/meal/:id', // se envía id y nombre como parámetros
+      name: 'meal_detail',
+      builder: (context, state) {
+        final id = state.pathParameters['id']!;
+        return MealDetailView(mealId: id);
+      },
+    ),
 
-- **GridView:** se empleó en la sección principal para mostrar diferentes opciones (ej. Registrarse, Ciclo de vida, Opción 3) de manera ordenada y visualmente atractiva. La cuadrícula permite aprovechar mejor el espacio de la pantalla y mantiene una estructura limpia.
+**Parámetros:**
+/ → Página principal (listado de comidas)
+/detail/:id → Página de detalle, recibe el parámetro id del platillo
 
-- **TextField:** se integró (en la opción de Registrarse) para permitir que el usuario ingrese información, como nombre, correo o contraseña. Este widget es fundamental en cualquier formulario y proporciona una experiencia de entrada de datos simple y personalizable.
+## Capturas 
+
+![Estado de carga/error](docs/carga.png)
+![Listado](docs/listado.png)
+![Detalle](docs/detalle.png)
 
 ## Datos del estudiante
 
-- Nombre completo: Nikoll Ximena Duarte Rivera
+- Nombre completo: Nikoll Ximena Duarte Rivera 
 - Código: 230221043

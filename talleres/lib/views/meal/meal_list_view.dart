@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:talleres/models/meal.dart';
 import 'package:talleres/services/meal_service.dart';
 
@@ -25,38 +24,37 @@ class _MealListViewState extends State<MealListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Listado de Comidas')),
+      appBar: AppBar(title: const Text('Comidas disponibles')),
       body: FutureBuilder<List<Meal>>(
         future: _futureMeals,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
+            //  Estado de carga
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
+            //  Estado de error
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            //  Si no hay datos
             return const Center(child: Text('No se encontraron comidas.'));
-          } else {
-            final meals = snapshot.data!;
-            return ListView.builder(
-              itemCount: meals.length,
-              itemBuilder: (context, index) {
-                final meal = meals[index];
-                return ListTile(
-                  leading: Image.network(
-                    meal.thumbnail,
-                    width: 80,
-                    height: 80,
-                    fit: BoxFit.cover,
-                  ),
-                  title: Text(meal.name),
-                  subtitle: Text('${meal.category} — ${meal.area}'),
-                  onTap: () {
-                    context.push('/meal/${meal.id}');
-                  },
-                );
-              },
-            );
           }
+
+          // Estado de éxito (datos cargados)
+          final meals = snapshot.data!;
+          return ListView.builder(
+            itemCount: meals.length,
+            itemBuilder: (context, index) {
+              final meal = meals[index];
+              return ListTile(
+                title: Text(meal.name),
+                subtitle: Text(meal.category),
+                leading: Image.network(meal.thumbnail, width: 60),
+                onTap: () {
+                  // ir al detalle
+                },
+              );
+            },
+          );
         },
       ),
     );

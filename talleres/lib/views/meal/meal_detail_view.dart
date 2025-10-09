@@ -55,13 +55,6 @@ class _MealDetailViewState extends State<MealDetailView> {
                   Text('Región: ${meal.area}'),
                   const SizedBox(height: 16),
                   const Text(
-                    'Ingredientes:',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  //...meal.ingredients.map((ing) => Text('- $ing')).toList(),
-                  const SizedBox(height: 16),
-                  const Text(
                     'Instrucciones:',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
