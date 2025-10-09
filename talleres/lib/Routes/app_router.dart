@@ -10,6 +10,9 @@ import '../views/future/future_view.dart'; // Para FutureView
 import '../views/isolate/isolate_view.dart'; // Para IsolateView
 import '../views/timer/timer_view.dart'; // Para TimerView
 
+import '../views/meal/meal_list_view.dart'; // Para MealListScreen
+import '../views/meal/meal_detail_view.dart'; // Para MealDetailScreen
+
 final GoRouter appRouter = GoRouter(
   routes: [
     GoRoute(
@@ -79,6 +82,25 @@ final GoRouter appRouter = GoRouter(
       path: '/timer',
       name: 'timer',
       builder: (context, state) => const TimerView(),
+    ),
+
+    //!Ruta para API MEALS
+    // Ruta para listado de comidas
+    GoRoute(
+      path: '/meals',
+      name: 'meals',
+      builder: (context, state) =>
+          const MealListView(), // Pantalla de lista de comidas
+    ),
+
+    // 📋 Ruta para detalle de una comida
+    GoRoute(
+      path: '/meal/:id', // se envía id y nombre como parámetros
+      name: 'meal_detail',
+      builder: (context, state) {
+        final id = state.pathParameters['id']!;
+        return MealDetailView(mealId: id);
+      },
     ),
   ],
 );

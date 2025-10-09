@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:talleres/Routes/app_router.dart';
 import 'themes/app_theme.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+void main() async {
+  // Asegurarse de que los widgets de Flutter estén inicializados
+  WidgetsFlutterBinding.ensureInitialized();
+  // Optimizar la carga del .env
+  try {
+    await dotenv.load(fileName: "assets/.env");
+  } catch (e) {
+    debugPrint('Error loading .env file: $e');
+  }
+  // Inicializar dotenv para cargar las variables de entorno
+  // await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
