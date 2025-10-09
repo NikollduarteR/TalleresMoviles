@@ -1,96 +1,74 @@
-# taller 3 - Segundo plano, asincronía y servicios en Flutter
+# Taller 4 - HTTP  
 
-
-##  Descripción general
-Este proyecto demuestra el uso de **asincronía en Flutter** mediante tres ejemplos prácticos:
-
-- **Future / async / await:** Simulación de carga de datos con espera asíncrona.
-- **Isolate:** Ejecución de tareas pesadas en segundo plano sin bloquear la interfaz.
-- **Timer:** Cronómetro funcional con control total (iniciar, pausar, reanudar, reiniciar).
-
-Cada vista se integra en una interfaz con pestañas (`TabBarScreen`) o mediante un menú tipo `GridView`, mostrando cómo Flutter gestiona procesos en segundo plano de forma eficiente.
+Aplicación Flutter que consume la API pública **TheMealDB** para mostrar recetas de comidas, sus detalles e ingredientes.  
+El proyecto implementa **navegación con `go_router`**, manejo de **variables de entorno con `flutter_dotenv`**, y una **arquitectura modular** con carpetas bien definidas.
 
 ---
 
-## Flujo general del proyecto
+## Descripción de la API
 
-### Menú principal (`GridViewWidget`)
-El usuario accede al menú principal con varias opciones:
-- **Registrarse**
-- **Ciclo de vida**
-- **Future**
-- **Isolate**
-- **Timer**
+**API utilizada:** [TheMealDB](https://www.themealdb.com/api.php)
 
-Cada tarjeta abre su respectiva pantalla.
+**Endpoint principal:**
+https://www.themealdb.com/api/json/v1/1/search.php?s=
 
----
+**Ejemplo de uso:**
+GET https://www.themealdb.com/api/json/v1/1/search.php?s=Migas
 
-## Flujos de ejecución
+**Ejemplo de respuesta JSON:**
 
-### 1. Future / async / await
-**Objetivo:** Simular una carga de datos sin bloquear la UI.
+json
+{
+  "meals": [
+    {
+      "idMeal": "53086",
+      "strMeal": "Migas",
+      "strCategory": "Miscellaneous",
+      "strArea": "Spanish",
+      "strInstructions": "Crumble the bread into small pieces. Sprinkle...",
+      "strMealThumb": ""https://www.themealdb.com/images/media/meals/xd9aj21740432378.jpg"
+    }
+  ]
+}
 
-**Flujo:**
-1. El usuario presiona **“Cargar datos simulados”**.  
-2. Se ejecuta una función `async` con `await Future.delayed(Duration(seconds: 3))`.  
-3. Durante la espera, se muestra un indicador de carga (`CircularProgressIndicator`).  
-4. Al finalizar, se actualiza la UI con los datos recibidos o un mensaje de error.
+## Arquitectura del proyecto
 
-**Diagrama:**
-![Diagrama del Future](assets/image2.png)
----
+![Estructura del proyecto](docs/image.png)
+![Estructura del proyecto](docs/image2.png)
 
-### 2. Isolate (tarea pesada)
-**Objetivo:** Ejecutar un cálculo intensivo sin bloquear la interfaz principal.
+## Navegación con go_router
 
-**Flujo:**
-1. El usuario presiona **“Ejecutar tarea larga”**.  
-2. Se crea un `ReceivePort` y se lanza un nuevo `Isolate`.  
-3. El proceso pesado (p. ej. suma de números o bucles grandes) se ejecuta en segundo plano.  
-4. Al terminar, el `Isolate` envía el resultado al hilo principal.  
-5. La UI muestra el mensaje con el resultado final.
+Las rutas se manejan desde el archivo app_router.dart
 
-**Diagrama:**
-![Diagrama del Isolate](assets/image3.png)
+Ruta para listado de comidas
+    GoRoute(
+      path: '/meals',
+      name: 'meals',
+      builder: (context, state) =>
+          const MealListView(), // Pantalla de lista de comidas
+    ),
 
----
+Ruta para detalle de una comida
+    GoRoute(
+      path: '/meal/:id', // se envía id y nombre como parámetros
+      name: 'meal_detail',
+      builder: (context, state) {
+        final id = state.pathParameters['id']!;
+        return MealDetailView(mealId: id);
+      },
+    ),
 
-### 3. Timer (cronómetro)
-**Objetivo:** Actualizar un contador cada segundo y controlar su estado con botones.
+**Parámetros:**
+/ → Página principal (listado de comidas)
+/detail/:id → Página de detalle, recibe el parámetro id del platillo
 
-**Flujo:**
-1. El usuario puede presionar **Iniciar**, **Pausar**, **Reanudar** o **Reiniciar**.  
-2. `Timer.periodic(Duration(seconds: 1))` actualiza el contador cada segundo.  
-3. Si el usuario pausa o sale de la vista, se cancela el `Timer` para liberar recursos.
+## Capturas 
 
-
-**Diagrama:**
-![Diagrama del Timer](assets/image.png)
-
----
-
-## Cuándo usar cada mecanismo
-
-| Mecanismo | Cuándo usarlo | Ejemplo |
-|------------|----------------|----------|
-| **Future** | Cuando se necesita ejecutar tareas **asíncronas cortas**, como llamadas HTTP, lectura de archivos o esperas simuladas. | Cargar lista de usuarios desde una API. |
-| **async / await** | Para escribir código asincrónico más claro y legible, esperando resultados sin bloquear la UI. | Esperar respuesta de un servidor o base de datos. |
-| **Timer** | Para ejecutar acciones **periódicas o con retardo**, como cronómetros o animaciones. | Cronómetro, cuenta regresiva, refrescar datos cada X segundos. |
-| **Isolate** | Para tareas **pesadas de CPU** que bloquearían la interfaz principal si se ejecutan directamente. | Procesamiento de datos, cifrado, simulaciones, cálculos grandes. |
-
----
-
-## Buenas prácticas
-
-- Cancelar `Timer` en `dispose()` para evitar fugas de memoria.  
-- Usar `mounted` antes de `setState()` después de operaciones asincrónicas.  
-- No usar `Isolate` para tareas simples, solo para procesos realmente pesados.  
-- Mostrar siempre los estados de la operación (loading, success, error).  
-
----
+![Estado de carga/error](docs/carga.png)
+![Listado](docs/listado.png)
+![Detalle](docs/detalle.png)
 
 ## Datos del estudiante
 
-- Nombre completo: Nikoll Ximena Duarte Rivera
+- Nombre completo: Nikoll Ximena Duarte Rivera 
 - Código: 230221043
