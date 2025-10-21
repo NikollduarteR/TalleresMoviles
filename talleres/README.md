@@ -1,72 +1,92 @@
-# Taller 4 - HTTP  
+# Taller 1 
 
-Aplicación Flutter que consume la API pública **TheMealDB** para mostrar recetas de comidas, sus detalles e ingredientes.  
-El proyecto implementa **navegación con `go_router`**, manejo de **variables de entorno con `flutter_dotenv`**, y una **arquitectura modular** con carpetas bien definidas.
+Este proyecto implementa la distribución de la aplicación móvil **MyRoute** utilizando **Firebase App Distribution** para gestionar versiones, testers y pruebas internas antes del despliegue oficial.  
+
+El flujo completo abarca desde la generación del archivo APK/AAB hasta la instalación y actualización en los dispositivos de prueba.
 
 ---
 
-## Descripción de la API
+## 🔄 Flujo General
 
-**API utilizada:** [TheMealDB](https://www.themealdb.com/api.php)
+1. **Generar APK o AAB**
+   - Se compila la app Flutter en modo release.
+   - Ejemplo:
 
-**Endpoint principal:**
-https://www.themealdb.com/api/json/v1/1/search.php?s=
+     ```bash
+     flutter build apk --release
+     ```
 
-**Ejemplo de uso:**
-GET https://www.themealdb.com/api/json/v1/1/search.php?s=Migas
+   - El archivo se genera en:
 
-**Ejemplo de respuesta JSON:**
+     ```
+     build/app/outputs/flutter-apk/app-release.apk
+     ```
 
-json
-{
-  "meals": [
-    {
-      "idMeal": "53086",
-      "strMeal": "Migas",
-      "strCategory": "Miscellaneous",
-      "strArea": "Spanish",
-      "strInstructions": "Crumble the bread into small pieces. Sprinkle...",
-      "strMealThumb": ""https://www.themealdb.com/images/media/meals/xd9aj21740432378.jpg"
-    }
-  ]
-}
+2. **Subir a Firebase App Distribution**
+   - Desde la consola Firebase:
+     - Ir a: **App Distribution → Releases**  
+     - Hacer clic en **Agregar versión** y subir el `.aab` o `.apk`.
+     - Completar las notas de versión (Release Notes) y seleccionar los testers.
 
-## Arquitectura del proyecto
+3. **Invitar Testers**
+   - Agregar los correos de los testers, por ejemplo:
 
-![Estructura del proyecto](docs/image.png)
-![Estructura del proyecto](docs/image2.png)
+     ```
+     dduran@uceva.edu.co
+     ```
 
-## Navegación con go_router
+   - Firebase enviará automáticamente un correo con el enlace de instalación.
 
-Las rutas se manejan desde el archivo app_router.dart
+4. **Instalación**
+   - El tester recibe un correo con el enlace directo de instalación.
+   - Debe aceptar la invitación y permitir la instalación desde fuentes confiables.
 
-Ruta para listado de comidas
-    GoRoute(
-      path: '/meals',
-      name: 'meals',
-      builder: (context, state) =>
-          const MealListView(), // Pantalla de lista de comidas
-    ),
+5. **Actualización**
+   - Cuando se publica una nueva versión, Firebase notifica automáticamente a los testers para que actualicen.
+   - La app mostrará los cambios (ejemplo: nueva vista de “Actualizaciones” dentro del menú lateral).
 
-Ruta para detalle de una comida
-    GoRoute(
-      path: '/meal/:id', // se envía id y nombre como parámetros
-      name: 'meal_detail',
-      builder: (context, state) {
-        final id = state.pathParameters['id']!;
-        return MealDetailView(mealId: id);
-      },
-    ),
+---
 
-**Parámetros:**
-/ → Página principal (listado de comidas)
-/detail/:id → Página de detalle, recibe el parámetro id del platillo
+## 📦 Publicación
 
-## Capturas 
+### Pasos resumidos para replicar el proceso
 
-![Estado de carga/error](docs/carga.png)
-![Listado](docs/listado.png)
-![Detalle](docs/detalle.png)
+1. Verificar que la app funcione correctamente en modo debug.
+2. Actualizar la versión en `pubspec.yaml`:
+   ```yaml
+   version: 1.0.1+2
+
+3. Generar el archivo de build:
+  ```
+  flutter build appbundle --release
+  ```
+
+4. Acceder a Firebase Console → App Distribution.
+5. Subir el .aab o .apk en la sección Releases.
+6. Escribir las Release Notes:
+  - Nueva pantalla de actualizaciones
+  - Correcciones visuales menores
+  - Optimización de carga
+7. Seleccionar los testers y distribuir la app.
+8. Verificar la recepción del correo e instalación exitosa.
+
+## Capturas
+
+## APP Distribution
+![Firebase](assets/1.png)
+
+## Correo de verificacion
+![Firebase](assets/2.png)
+
+## CaptInstalacion del APK
+![Firebase](assets/3.png)
+
+## APP 
+![Firebase](assets/4.png)
+
+## Nueva versión
+![Firebase](assets/5.png)
+
 
 ## Datos del estudiante
 
