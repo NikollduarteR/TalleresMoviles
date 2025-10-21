@@ -9,7 +9,7 @@ import 'package:talleres/views/grid/mi_ciclo_vida.dart'; // Para MiCicloVida
 import '../views/future/future_view.dart'; // Para FutureView
 import '../views/isolate/isolate_view.dart'; // Para IsolateView
 import '../views/timer/timer_view.dart'; // Para TimerView
-
+import '../views/actualizacion/actualizacione_view.dart'; // Para ActualizacionesView
 import '../views/meal/meal_list_view.dart'; // Para MealListScreen
 import '../views/meal/meal_detail_view.dart'; // Para MealDetailScreen
 
@@ -101,6 +101,10 @@ final GoRouter appRouter = GoRouter(
         final id = state.pathParameters['id']!;
         return MealDetailView(mealId: id);
       },
+    ),
+    GoRoute(
+      path: '/actualizaciones',
+      builder: (context, state) => const ActualizacionesView(),
     ),
   ],
 );
