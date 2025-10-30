@@ -12,11 +12,18 @@ import '../views/timer/timer_view.dart'; // Para TimerView
 import '../views/actualizacion/actualizacione_view.dart'; // Para ActualizacionesView
 import '../views/meal/meal_list_view.dart'; // Para MealListScreen
 import '../views/meal/meal_detail_view.dart'; // Para MealDetailScreen
+import '../views/auth/login_page.dart'; // Para LoginPage
 
 final GoRouter appRouter = GoRouter(
+  initialLocation: '/login',
   routes: [
     GoRoute(
-      path: '/',
+      path: '/login',
+      name: 'login',
+      builder: (context, state) => const LoginPage(),
+    ),
+    GoRoute(
+      path: '/home',
       builder: (context, state) => const HomeScreen(), // Usa HomeView
     ),
     // Rutas para el paso de parámetros
