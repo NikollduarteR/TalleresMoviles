@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:talleres/views/grid/registrarse_detalle_screen.dart';
 import 'package:talleres/views/grid/registrarse_screen.dart';
+import 'package:talleres/views/jwt/jwt_view.dart';
 import '../views/home/home_screen.dart';
 import '../views/paso_parametros/paso_parametros_screen.dart';
 import '../views/paso_parametros/detalle_screen.dart';
@@ -18,12 +19,7 @@ final GoRouter appRouter = GoRouter(
   initialLocation: '/login',
   routes: [
     GoRoute(
-      path: '/login',
-      name: 'login',
-      builder: (context, state) => const LoginPage(),
-    ),
-    GoRoute(
-      path: '/home',
+      path: '/',
       builder: (context, state) => const HomeScreen(), // Usa HomeView
     ),
     // Rutas para el paso de parámetros
@@ -113,5 +109,8 @@ final GoRouter appRouter = GoRouter(
       path: '/actualizaciones',
       builder: (context, state) => const ActualizacionesView(),
     ),
+    //!Ruta para login
+    GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
+    GoRoute(path: '/jwt', builder: (context, state) => const JwtScreen()),
   ],
 );
