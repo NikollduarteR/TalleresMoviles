@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:talleres/views/grid/registrarse_detalle_screen.dart';
 import 'package:talleres/views/grid/registrarse_screen.dart';
+import 'package:talleres/views/jwt/jwt_view.dart';
 import '../views/home/home_screen.dart';
 import '../views/paso_parametros/paso_parametros_screen.dart';
 import '../views/paso_parametros/detalle_screen.dart';
@@ -12,8 +13,10 @@ import '../views/timer/timer_view.dart'; // Para TimerView
 import '../views/actualizacion/actualizacione_view.dart'; // Para ActualizacionesView
 import '../views/meal/meal_list_view.dart'; // Para MealListScreen
 import '../views/meal/meal_detail_view.dart'; // Para MealDetailScreen
+import '../views/auth/login_page.dart'; // Para LoginPage
 
 final GoRouter appRouter = GoRouter(
+  initialLocation: '/login',
   routes: [
     GoRoute(
       path: '/',
@@ -106,5 +109,8 @@ final GoRouter appRouter = GoRouter(
       path: '/actualizaciones',
       builder: (context, state) => const ActualizacionesView(),
     ),
+    //!Ruta para login
+    GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
+    GoRoute(path: '/jwt', builder: (context, state) => const JwtScreen()),
   ],
 );

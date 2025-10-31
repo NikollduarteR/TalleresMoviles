@@ -29,6 +29,7 @@ class TabBarScreen extends StatelessWidget {
                     'Ciclo de vida',
                     'Future',
                     'Isolate',
+                    'JWT',
                   ],
                 ),
                 // Segunda pestaña: Timer

@@ -31,6 +31,9 @@ class GridViewWidget extends StatelessWidget {
               case 'Isolate':
                 context.push('/isolate');
                 break;
+              case 'JWT':
+                context.push('/jwt');
+                break;
             }
           },
           child: Card(
