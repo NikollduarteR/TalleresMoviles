@@ -14,6 +14,7 @@ void main() async {
   }
   // Inicializar dotenv para cargar las variables de entorno
   // await dotenv.load(fileName: ".env");
+
   runApp(const MyApp());
 }
 
