@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "524062546417",
+    "project_id": "registronotas2025-b55ad",
+    "storage_bucket": "registronotas2025-b55ad.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:524062546417:android:5b00a93b3e41dc1b178c50",
+        "android_client_info": {
+          "package_name": "com.example.taller_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD04x04OfobLauOo54dbfGJHdHKk_Hr3mk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

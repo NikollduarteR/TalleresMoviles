@@ -34,6 +34,9 @@ class GridViewWidget extends StatelessWidget {
               case 'JWT':
                 context.push('/jwt');
                 break;
+              case 'Universidades FB':
+                context.push('/universidadesFirebase');
+                break;
             }
           },
           child: Card(
