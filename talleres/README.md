@@ -1,19 +1,17 @@
-# 🔐 Taller de Autenticación JWT en Flutter
+# 📚 Gestión de Universidades con Flutter y Firebase
 
-Este proyecto implementa un sistema de autenticación con **JWT (JSON Web Token)** en una aplicación móvil Flutter.  
-El objetivo es realizar el **consumo de un API REST** con manejo de **login, almacenamiento seguro del token y redirección** a una pantalla principal después de iniciar sesión correctamente.
+Este proyecto es una aplicación desarrollada en **Flutter** que permite gestionar universidades (crear, listar, editar y eliminar) usando **Firebase Firestore** como base de datos en tiempo real.
 
 ---
 
-## 📘 Descripción general
+## 🚀 Características principales
 
-La aplicación permite que el usuario inicie sesión ingresando su correo electrónico y contraseña.  
-Al validar las credenciales, el sistema realiza una petición `POST` al endpoint `/auth/login` del API.  
-Si la autenticación es exitosa, se almacena el **token JWT** y la información del usuario en el **almacenamiento seguro** del dispositivo.
+- 🔥 **Integración con Firebase Firestore** para persistencia en la nube.  
+- 📱 **Interfaz moderna** con Material Design.  
+- 🧩 **Arquitectura limpia** basada en servicios (`universidad_service.dart`) y modelos (`universidad_fb.dart`).  
+- 📡 **Lectura en tiempo real** de los datos mediante `StreamBuilder`.  
+- 🗑️ **Eliminación y actualización dinámica** de universidades.  
+- ✅ **Identificación por ID** único (document ID de Firestore).
 
-Este taller forma parte de la asignatura **Talleres Móviles**, y busca aplicar los conceptos de:
-- Consumo de API REST
-- Manejo de tokens JWT
-- Almacenamiento local seguro (`flutter_secure_storage`)
-- Manejo de rutas y navegación (`go_router`)
-- Buenas prácticas con variables de entorno (`flutter_dotenv`)
+---
+
