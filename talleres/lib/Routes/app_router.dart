@@ -2,6 +2,9 @@ import 'package:go_router/go_router.dart';
 import 'package:talleres/views/grid/registrarse_detalle_screen.dart';
 import 'package:talleres/views/grid/registrarse_screen.dart';
 import 'package:talleres/views/jwt/jwt_view.dart';
+import 'package:talleres/views/universidades/universidad_fb_form_view.dart';
+
+import 'package:talleres/views/universidades/universidades_fb_list_view.dart';
 import '../views/home/home_screen.dart';
 import '../views/paso_parametros/paso_parametros_screen.dart';
 import '../views/paso_parametros/detalle_screen.dart';
@@ -112,5 +115,25 @@ final GoRouter appRouter = GoRouter(
     //!Ruta para login
     GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
     GoRoute(path: '/jwt', builder: (context, state) => const JwtScreen()),
+
+    // !Ruta para el manejo de Universidades CRUD
+    GoRoute(
+      path: '/universidadesFirebase',
+      name: 'universidadesFirebase',
+      builder: (_, __) => const UniversidadFbListView(),
+    ),
+    GoRoute(
+      path: '/universidadesfb/create',
+      name: 'universidadesfb.create',
+      builder: (context, state) => const UniversidadFbFormView(),
+    ),
+    GoRoute(
+      path: '/universidadesfb/edit/:id',
+      name: 'universidadesfb.edit',
+      builder: (context, state) {
+        final id = state.pathParameters['id']!;
+        return UniversidadFbFormView(id: id);
+      },
+    ),
   ],
 );
