@@ -77,7 +77,7 @@ class _FutureViewState extends State<FutureView> {
               Text(estado, style: const TextStyle(fontSize: 18)),
               const SizedBox(height: 20),
 
-              if (datos != null) ...datos!.map((d) => Text("🍎 $d")).toList(),
+              if (datos != null) ...datos!.map((d) => Text("🍎 $d")),
 
               if (error != null)
                 Text(

@@ -30,6 +30,7 @@ class TabBarScreen extends StatelessWidget {
                     'Future',
                     'Isolate',
                     'JWT',
+                    'Universidades FB',
                   ],
                 ),
                 // Segunda pestaña: Timer
