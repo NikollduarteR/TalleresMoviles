@@ -1,7 +1,10 @@
 import 'package:go_router/go_router.dart';
+import 'package:talleres/models/task.dart';
 import 'package:talleres/views/grid/registrarse_detalle_screen.dart';
 import 'package:talleres/views/grid/registrarse_screen.dart';
 import 'package:talleres/views/jwt/jwt_view.dart';
+import 'package:talleres/views/task/form_view.dart';
+import 'package:talleres/views/task/list_view.dart';
 import 'package:talleres/views/universidades/universidad_fb_form_view.dart';
 
 import 'package:talleres/views/universidades/universidades_fb_list_view.dart';
@@ -133,6 +136,24 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) {
         final id = state.pathParameters['id']!;
         return UniversidadFbFormView(id: id);
+      },
+    ),
+    GoRoute(
+      path: '/tasks',
+      name: 'tasks',
+      builder: (context, state) => const TaskListView(),
+    ),
+    GoRoute(
+      path: '/tasks/create',
+      name: 'tasks.create',
+      builder: (context, state) => const TaskFormView(),
+    ),
+    GoRoute(
+      path: '/tasks/edit',
+      name: 'tasks.edit',
+      builder: (context, state) {
+        final task = state.extra as Task; // ← Recibes el objeto completo
+        return TaskFormView(task: task);
       },
     ),
   ],
