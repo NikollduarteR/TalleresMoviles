@@ -5,19 +5,24 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
+// IMPORTANTE
+import 'package:provider/provider.dart';
+import 'provider/task_provider.dart';
+import 'services/db_service.dart';
+
 void main() async {
-  // Asegurarse de que los widgets de Flutter estén inicializados
   WidgetsFlutterBinding.ensureInitialized();
-  // Optimizar la carga del .env
+
   try {
     await dotenv.load(fileName: "assets/.env");
   } catch (e) {
     debugPrint('Error loading .env file: $e');
   }
-  // Inicializar dotenv para cargar las variables de entorno
-  // await dotenv.load(fileName: ".env");
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // 🔥 Inicializar SQLite + colas + BD (Solo esta línea nueva)
+  await TaskService.init();
 
   runApp(const MyApp());
 }
@@ -27,14 +32,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // build es un metodo que se ejecuta cada vez que se necesita redibujar la pantalla
-    //go_router para navegacion
-    return MaterialApp.router(
-      theme:
-          AppTheme.lightTheme, //thema personalizado y permamente en toda la app
-      title:
-          'Flutter - UCEVA', // Usa el tema personalizado, no se muestra el tema por defecto. esto se visualiza en toda la app
-      routerConfig: appRouter, // Usa el router configurado
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => TaskProvider())],
+      child: MaterialApp.router(
+        theme: AppTheme.lightTheme,
+        title: 'Flutter - UCEVA',
+        routerConfig: appRouter,
+      ),
     );
   }
 }
